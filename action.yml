@@ -1,0 +1,32 @@
+name: "Issue Card Creator"
+branding:
+  color: "purple"
+  icon: "file-plus"
+description: "Create a card for an issue on one or more project boards, depending on the label(s)."
+inputs:
+  actions:
+    description: "A JSON object containing the data for which labels create cards on which project board."
+    required: true
+    default: '{"data": [
+      {
+      "label": "bug",
+      "project": "Bug Tracker Project",
+      "project-type": "repo"
+      "column": "To-Fix",
+      "repo": "bug-tracker-repo"
+      },
+      {
+      "label": "wontfix",
+      "project": "Some Organization-wide Project",
+      "project-type": "org"
+      "column": "Icebox",
+      "org": "super-important-org"
+      }
+      ]}'
+  github-token:
+    description: "Your GitHub access token"
+    required: true
+    default: ${{github.token}}
+runs:
+  using: "node12"
+  main: "index.js"
