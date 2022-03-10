@@ -42,7 +42,12 @@ async function process(dataMap, payload) {
       console.log(
         `Adding label: ${dataMap[item].label} to Issue #${payload.issue.number}`
       );
-
+      await addLabelToIssue(
+        dataMap[item].org,
+        dataMap[item].repo,
+        payload.issue.number,
+        dataMap[item].label
+      );
       console.log(`Getting ID for project #${dataMap[item].project}`);
       const projectId = await getBetaProjectId(
         dataMap[item].org,
@@ -58,8 +63,8 @@ async function process(dataMap, payload) {
 
 async function addLabelToIssue(org, repo, issueNumber, label) {
   return await octokit.rest.issues.addLabels({
-    org,
-    repo,
+    owner: org,
+    repo: repo,
     issue_number: issueNumber,
     labels: [label],
   });
