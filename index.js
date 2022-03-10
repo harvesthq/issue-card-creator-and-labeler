@@ -37,35 +37,31 @@ async function addIssueToBetaProject(projectId, issueId) {
 }
 
 async function process(dataMap, payload) {
-  for (let item in dataMap) {
-    console.log(
-      `Adding label: ${dataMap[item].label} to Issue #${payload.issue.number}`
-    );
-    await addLabelToIssue(
-      dataMap[item].org,
-      dataMap[item].repo,
-      payload.issue.number,
-      dataMap[item].label
-    );
-    console.log(`Getting ID for project #${dataMap[item].projectNumber}`);
-    const projectId = await getBetaProjectId(
-      dataMap[item].org,
-      dataMap[item].projectNumber
-    );
-    const issueId = payload.issue.node_id;
-    await addIssueToBetaProject(projectId, issueId);
+  try {
+    for (let item in dataMap) {
+      console.log(
+        `Adding label: ${dataMap[item].label} to Issue #${payload.issue.number}`
+      );
+
+      console.log(`Getting ID for project #${dataMap[item].projectNumber}`);
+      const projectId = await getBetaProjectId(
+        dataMap[item].org,
+        dataMap[item].projectNumber
+      );
+      const issueId = payload.issue.node_id;
+      await addIssueToBetaProject(projectId, issueId);
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
 async function addLabelToIssue(org, repo, issueNumber, label) {
-  let labels = [];
-  labels.push(label);
-
   return await octokit.rest.issues.addLabels({
     org,
     repo,
     issue_number: issueNumber,
-    labels: labels,
+    labels: [label],
   });
 }
 
