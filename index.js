@@ -4,7 +4,7 @@ const github = require("@actions/github");
 const githubToken = core.getInput("github-token");
 const octokit = github.getOctokit(githubToken);
 const fetch = require("node-fetch");
-
+const GRAPH_URL = "https://api.github.com/graphql";
 const graphHeaders = {
   "Content-Type": "application/json",
   Accept: "application/json",
