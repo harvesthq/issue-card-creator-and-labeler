@@ -43,10 +43,10 @@ async function process(dataMap, payload) {
         `Adding label: ${dataMap[item].label} to Issue #${payload.issue.number}`
       );
 
-      console.log(`Getting ID for project #${dataMap[item].projectNumber}`);
+      console.log(`Getting ID for project #${dataMap[item].project}`);
       const projectId = await getBetaProjectId(
         dataMap[item].org,
-        dataMap[item].projectNumber
+        dataMap[item].project
       );
       const issueId = payload.issue.node_id;
       await addIssueToBetaProject(projectId, issueId);
