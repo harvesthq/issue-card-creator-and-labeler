@@ -58,11 +58,17 @@ async function process(dataMap, payload) {
 }
 
 async function addLabelToIssue(org, repo, issueNumber, label) {
+  console.log(
+    `Label debug info:\nOrg: ${org}\nRepo: ${repo}\nIssue Number: ${issueNumber}\nLabel: ${label}`
+  );
+  let labels = [];
+  labels.push(label);
+
   return await octokit.rest.issues.addLabels({
     org,
     repo,
     issueNumber,
-    label,
+    labels,
   });
 }
 
