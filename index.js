@@ -8,6 +8,7 @@ const fetch = require("node-fetch");
 const graphHeaders = {
   "Content-Type": "application/json",
   Accept: "application/json",
+  Authorization: `token ${githubToken}`,
 };
 
 async function getBetaProjectId(org, projectNumber) {
