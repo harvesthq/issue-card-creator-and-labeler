@@ -1,8 +1,8 @@
-name: "Issue Card Creator"
+name: "Beta Project Issue Adder + Labeler"
 branding:
   color: "purple"
   icon: "file-plus"
-description: "Create a card for an issue on one or more project boards, depending on the label(s)."
+description: "When an issue is created on your repo, this action automatically labels it and adds it to a specified beta project."
 inputs:
   actions:
     description: "A JSON object containing the data for which labels create cards on which project board."
