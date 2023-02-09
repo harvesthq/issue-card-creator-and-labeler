@@ -21,6 +21,7 @@ async function getBetaProjectId(org, projectNumber) {
     }),
   });
   const data = await result.json();
+  console.log(`Response from getBetaProjectId: #${JSON.stringify(data)}`);
   return data.data.organization.projectNext.id;
 }
 
