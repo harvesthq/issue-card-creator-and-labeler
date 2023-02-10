@@ -12,7 +12,13 @@ const graphHeaders = {
 };
 
 async function getBetaProjectId(org, projectNumber) {
-  const query = `query{organization(login: "${org}"){projectNext(number: ${projectNumber}){id}}}`;
+  const query = `query {
+    organization(login: "${org}") {
+      projectV2(number: ${projectNumber}) {
+        id
+      }
+    }
+  }`;
   const result = await fetch(GRAPH_URL, {
     method: "POST",
     headers: graphHeaders,
@@ -22,11 +28,17 @@ async function getBetaProjectId(org, projectNumber) {
   });
   const data = await result.json();
   console.log(`Response from getBetaProjectId: #${JSON.stringify(data)}`);
-  return data.data.organization.projectNext.id;
+  return data.data.organization.projectV2.id;
 }
 
 async function addIssueToBetaProject(projectId, issueId) {
-  const query = `mutation {addProjectNextItem(input: {projectId: "${projectId}" contentId: "${issueId}"}) {projectNextItem {id}}}`;
+  const query = `mutation {
+    addProjectV2ItemById(input: {projectId: "${projectId}" contentId: "${issueId}"}) {
+      item {
+        id
+      }
+    }
+  }`;
   const result = await fetch(GRAPH_URL, {
     method: "POST",
     headers: graphHeaders,
